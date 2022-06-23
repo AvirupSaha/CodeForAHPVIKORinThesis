@@ -1,0 +1,84 @@
+import numpy as np
+import scipy.optimize as spo
+import ahpy
+from .__version__ import __version__
+from .ahpy import Compare
+from .ahpy import Compose
+
+criteria_comparisons = {
+    (Reliability of Content', 'Relevant'): 1.00368,
+    (Reliability of Content', 'Timely'): 1.02760,
+    ('Reliability of Content', 'Accuracy'): 1.03149,
+    ('Reliability of Content', 'Reliability of Usability'): 1.03671,
+    ('Reliability of Content', 'User Friendly'): 1.03934,
+    ('Reliability of Content', 'Interactive Features'): 1.04866,
+    ('Reliability of Content', 'Appropriateness'): 1.05677,
+
+    ('Relevant', 'Reliability of Content'): 0.99634,
+    ('Relevant', 'Timely'): 1.02384,
+    ('Relevant', 'Accuracy'): 1.02771,
+    ('Relevant', 'Reliability of Usability'): 1.03291,
+    ('Relevant', 'User Friendly'): 1.03553,
+    ('Relevant', 'Interactive Features'): 1.04481,
+    ('Relevant', 'Appropriateness'): 1.05290,
+
+    ('Timely', 'Reliability of Content'): 0.97314,
+    ('Timely', 'Relevant'): 0.97672,
+    ('Timely', 'Accuracy'): 1.00378,
+    ('Timely', 'Reliability of Usability'): 1.00886,
+    ('Timely', 'User Friendly'): 1.01142,
+    ('Timely', 'Interactive Features'): 1.02049,
+    ('Timely', 'Appropriateness'): 1.02839,
+
+    ('Accuracy', 'Reliability of Content'): 0.96947,
+    ('Accuracy', 'Relevant'): 0.97304,
+    ('Accuracy', 'Timely'): 0.99624,
+    ('Accuracy', 'Reliability of Usability'): 1.00506,
+    ('Accuracy', 'User Friendly'): 1.00761,
+    ('Accuracy', 'Interactive Features'): 1.01665,
+    ('Accuracy', 'Appropriateness'): 1.02452,
+
+    ('Reliability of Usability', 'Reliability of Content'): 0.96459,
+    ('Reliability of Usability', 'Relevant'): 0.78740,
+    ('Reliability of Usability', 'Timely'): 0.99122,
+    ('Reliability of Usability', 'Accuracy'): 0.99496,
+    ('Reliability of Usability', 'User Friendly'): 1.00254,
+    ('Reliability of Usability', 'Interactive Features'): 1.01152,
+    ('Reliability of Usability', 'Appropriateness'): 1.01935,
+
+    ('User Friendly', 'Reliability of Content'): 0.96215,
+    ('User Friendly', 'Relevant'): 0.96569,
+    ('User Friendly', 'Timely'): 0.98871,
+    ('User Friendly', 'Accuracy'): 0.99244,
+    ('User Friendly', 'Reliability of Usability'): 0.99747,
+    ('User Friendly', 'Interactive Features'): 1.00896,
+    ('User Friendly', 'Appropriateness'): 1.01677,
+
+    ('Interactive Features', 'Reliability of Content'): 0.95360,
+    ('Interactive Features', 'Relevant'): 0.95711,
+    ('Interactive Features', 'Timely'): 0.97992,
+    ('Interactive Features', 'Accuracy'): 0.98363,
+    ('Interactive Features', 'Reliability of Usability'): 0.98861,
+    ('Interactive Features', 'User Friendly'): 0.99112,
+    ('Interactive Features', 'Appropriateness'): 1.00774,
+
+    ('Appropriateness', 'Reliability of Content'): 0.94628,
+    ('Appropriateness', 'Relevant'): 0.94975,
+    ('Appropriateness', 'Timely'): 0.97240,
+    ('Appropriateness', 'Accuracy'): 0.97607,
+    ('Appropriateness', 'Reliability of Usability'): 0.98101,
+    ('Appropriateness', 'User Friendly'): 0.98350,
+    ('Appropriateness', 'Interactive Features'): 0.99232
+}
+
+subCriteria = ahpy.Compare(
+    name='subCriteria', comparisons=criteria_comparisons,
+    precision=3, random_index='saaty')
+print(subCriteria.target_weights)
+print(subCriteria.consistency_ratio)
+
+>>>{'Reliability of Content': 1.0302, 'Relevant': 1.0264, 
+'Timely': 1.0025, 'Accuracy': 0.9987, 'Reliability': 0.9704,
+'User Friendly': 0.9912, 'Interactive Features': 0.9824,
+'Appropriateness': 0.9748}
+>>>0.003342335

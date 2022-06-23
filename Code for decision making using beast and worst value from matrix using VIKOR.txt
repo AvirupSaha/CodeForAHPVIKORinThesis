@@ -1,0 +1,44 @@
+#Code for decision making using beast and worst
+#value from matrix using VIKOR
+
+import numpy as np
+import pandas as pd
+from decipy import executors as exe
+
+matrix = np.array([
+    [84, 64, 29, 20, 16],
+    [74, 70, 38, 21, 10],
+    [65, 69, 45, 27, 7],
+    [74, 57, 41, 32, 9],
+    [68, 63, 44, 28, 10],
+    [72, 59, 36, 38, 8],
+    [57, 81, 37, 23, 15],
+    [60, 69, 45, 25, 14],
+])
+
+alts = ['MostImportant', 'Important', 'Neutral',
+        'LessImportant', 'NotImportant']
+        
+crits = ['Design', 'Organization', 'Content', 'Usability']
+beneficial = [True, True, True, True]
+
+weights = [0.333, 0.267, 0.200, 0.133, 0.067]
+xij = pd.DataFrame(matrix, index=alts, columns=crits)
+
+kwargs = {
+    'data': xij,
+    'beneficial': beneficial,
+    'weights': weights,
+    'rank_reverse': True,
+    'rank_method': "ordinal"
+}
+vikor = exe.Vikor(**kwargs) # Vikor 
+print(vikor.dataframe)
+analizer = exe.RankSimilarityAnalyzer()
+analizer.add_executor(vikor)
+results = analizer.analyze()
+print(results)
+
+>>{'Content': 0.415928183, 'Usability': 0.470757818,
+   'Design': 0.563156559, 'Organization': 0.602028085}
+>>0.047619048
